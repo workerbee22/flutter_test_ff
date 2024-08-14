@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '/index.dart';
+import '/main.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
 export 'package:go_router/go_router.dart';
@@ -29,17 +30,48 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
-      errorBuilder: (context, state) => const HomePageWidget(),
+      errorBuilder: (context, state) => const NavBarPage(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => const HomePageWidget(),
+          builder: (context, _) => const NavBarPage(),
         ),
         FFRoute(
-          name: 'HomePage',
-          path: '/homePage',
-          builder: (context, params) => const HomePageWidget(),
+          name: 'Info',
+          path: '/info',
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'Info')
+              : const NavBarPage(
+                  initialPage: 'Info',
+                  page: InfoWidget(),
+                ),
+        ),
+        FFRoute(
+          name: 'Schedule',
+          path: '/schedule',
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'Schedule')
+              : const NavBarPage(
+                  initialPage: 'Schedule',
+                  page: ScheduleWidget(),
+                ),
+        ),
+        FFRoute(
+          name: 'Map',
+          path: '/map',
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'Map')
+              : NavBarPage(
+                  initialPage: 'Map',
+                  page: MapWidget(
+                    listLatLong: params.getParam<LatLng>(
+                      'listLatLong',
+                      ParamType.LatLng,
+                      isList: true,
+                    ),
+                  ),
+                ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
