@@ -115,14 +115,24 @@ class _InfoWidgetState extends State<InfoWidget> with TickerProviderStateMixin {
                         child: TabBarView(
                           controller: _model.tabBarController,
                           children: [
-                            const Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   8.0, 8.0, 8.0, 0.0),
                               child: SingleChildScrollView(
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [],
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      child: Image.network(
+                                        'https://picsum.photos/seed/3/600',
+                                        width: 418.0,
+                                        height: 200.0,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
